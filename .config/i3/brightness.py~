@@ -1,0 +1,5 @@
+from subprocess import check_output, call
+from sys import exit
+import sys
+
+status = check_output(['./bright.sh'], universal_newlines=True)

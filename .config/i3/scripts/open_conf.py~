@@ -1,0 +1,5 @@
+from subprocess import check_output, call
+from sys import exit
+import sys
+
+call(['vim', '~/.config/i3/config'])

@@ -1,0 +1,3 @@
+configuration  {
+	theme: "~/.config/i3/nord.css";
+}
