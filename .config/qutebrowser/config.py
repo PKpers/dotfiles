@@ -17,6 +17,8 @@ config.load_autoconfig(False)
 ## Appearence---------------------------------------------------------------------------------------------
 ## Dracula theme ##
 # Load existing settings made via :set
+import sys
+sys.path.insert(0, '/home/kpapad/')#add home directory to system's pathso python can search there too for the dracula dir
 import dracula.draw
 config.load_autoconfig()
 dracula.draw.blood(c, {
