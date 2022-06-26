@@ -1,0 +1,4 @@
+python
+fontawsome
+material design
+i3blocks contrib repo
