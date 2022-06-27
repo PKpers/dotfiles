@@ -15,6 +15,38 @@
 ;; Set up the visible bell
 (setq visible-bell t)
 
+;; set up use package
+(require 'package)
+(setq package-archives '(("melpa". "https://melpa.org/packages/")
+			 ("org".   "https://orgmode.org/elpa/")
+			 ("elpa".  "https://elpa.gnu.org/packages/")))
+(package-initialize)
+(unless package-archive-contents
+  (package-refresh-contents))
+
+;; Initialize use-package on non linux platforms
+(unless (package-installed-p 'use-package)
+  (package-install 'use-package))
+
+(require 'use-package)
+(setq use-package-always-ensure t)
+
+;; set up line numbers mode
+(column-number-mode)
+(global-display-line-numbers-mode t)
+
+;; Disable line numbers for some modes
+(dolist( mode '(org-mode-hook
+		term-mode-hook
+		vterm-mode-hook
+		eshell-mode-hook
+		pdf-view-mode-hook
+		image-mode-hook))
+  (add-hook mode (lambda() (display-line-numbers-mode 0))))
+
+(use-package doom-themes)
+(load-theme 'doom-dracula t)
+
 ;; set some custom key bindings
 (define-prefix-command 'ring-map)
 (global-set-key (kbd "C-<SPC>") 'ring-map)
@@ -174,36 +206,6 @@
 ;OpenDyslexic Nerd Font
 ;;Package Manager Configuration ---------------------------------------
 ;; initialize package sources
-(require 'package)
-(setq package-archives '(("melpa". "https://melpa.org/packages/")
-			 ("org".   "https://orgmode.org/elpa/")
-			 ("elpa".  "https://elpa.gnu.org/packages/")))
-(package-initialize)
-(unless package-archive-contents
-  (package-refresh-contents))
-
-;; Initialize use-package on non linux platforms
-(unless (package-installed-p 'use-package)
-  (package-install 'use-package))
-
-(require 'use-package)
-(setq use-package-always-ensure t)
-
-(column-number-mode)
-(global-display-line-numbers-mode t)
-
-;; Disable line numbers for some modes
-(dolist( mode '(org-mode-hook
-		term-mode-hook
-		vterm-mode-hook
-		eshell-mode-hook
-		pdf-view-mode-hook
-		image-mode-hook))
-  (add-hook mode (lambda() (display-line-numbers-mode 0))))
-
-(use-package doom-themes)
-(load-theme 'doom-dracula t)
-
 
 ;; PDF files-------------------------------------------------------------
 (use-package pdf-tools
