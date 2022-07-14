@@ -208,14 +208,19 @@
 ;; initialize package sources
 
 ;; PDF files-------------------------------------------------------------
-(use-package pdf-tools
-  :pin manual
-  :config
-  (pdf-tools-install)
-  (setq-default pdf-view-display-size 'fit-width); open a pdf in pdf-view mode
-  (define-key pdf-view-mode-map (kbd "C-s") 'isearch-forward); use isearch
-  :custom
-  (pdf-annot-activate-created-annotations t "automatically annotate highlights"))
+;; somehow pdf-tools is broken. Untill its fixed I will use mupdf as emacs default pdf reader with the use of open with package
+(use-package openwith)
+(require 'openwith)
+(setq openwith-associations '(("\\.pdf\\'" "mupdf" (file))))
+(openwith-mode t)
+;(use-package pdf-tools
+;  :pin manual
+;  :config
+ ; (pdf-tools-install)
+ ; (setq-default pdf-view-display-size 'fit-width); open a pdf in pdf-view mode
+ ; (define-key pdf-view-mode-map (kbd "C-s") 'isearch-forward); use isearch
+ ; :custom
+  ;(pdf-annot-activate-created-annotations t "automatically annotate highlights"))
 
 ;; Conda configuration-------------------------------------------------
 (use-package conda)
@@ -245,7 +250,7 @@
  '(doc-view-continuous t)
  '(ivy-rich-mode t)
  '(package-selected-packages
-   '(hydra evil-collection evil-mc-extras evil elfeed pdf-tools perspective pdf-view-restore flyspell-correct-ivy vterm eshell-prompt-extras eshell-git-prompt visual-fill-column org-bullets conda exec-path-from-shell helpful which-key use-package doom-themes doom-modeline counsel auto-correct))
+   '(openwith hydra evil-collection evil-mc-extras evil elfeed pdf-tools perspective pdf-view-restore flyspell-correct-ivy vterm eshell-prompt-extras eshell-git-prompt visual-fill-column org-bullets conda exec-path-from-shell helpful which-key use-package doom-themes doom-modeline counsel auto-correct))
  '(visual-line-mode t t))
 (custom-set-faces
  ;; custom-set-faces was added by Custom.
