@@ -250,7 +250,7 @@
  '(doc-view-continuous t)
  '(ivy-rich-mode t)
  '(package-selected-packages
-   '(openwith hydra evil-collection evil-mc-extras evil elfeed pdf-tools perspective pdf-view-restore flyspell-correct-ivy vterm eshell-prompt-extras eshell-git-prompt visual-fill-column org-bullets conda exec-path-from-shell helpful which-key use-package doom-themes doom-modeline counsel auto-correct))
+   '(org-mime dired-hide-dotfiles dired-single openwith hydra evil-collection evil-mc-extras evil elfeed pdf-tools perspective pdf-view-restore flyspell-correct-ivy vterm eshell-prompt-extras eshell-git-prompt visual-fill-column org-bullets conda exec-path-from-shell helpful which-key use-package doom-themes doom-modeline counsel auto-correct))
  '(visual-line-mode t t))
 (custom-set-faces
  ;; custom-set-faces was added by Custom.
@@ -371,23 +371,32 @@
   (setq mu4e-update-interval (* 10 60))
   (setq mu4e-get-mail-command "mbsync -a")
   (setq mu4e-maildir "~/Mail")
-  
+  ;; Configure the function to use for sending mail
+  (setq message-send-mail-function 'smtpmail-send-it)
+  ;; Make sure plain text mails flow correctly for recipients
+  (setq mu4e-compose-format-flowed t)
+ ;; prevent <openwith> from interfering with mail attachments
+  (require 'mm-util)
+  (add-to-list 'mm-inhibit-file-name-handlers 'openwith-file-handler)
   (setq mu4e-contexts
         (list
          ;; Personal account
          (make-mu4e-context
           :name "Personal"
           :match-func
-            (lambda (msg)
-              (when msg
-                (string-prefix-p "/Gmail" (mu4e-message-field msg :maildir))))
+          (lambda (msg)
+            (when msg
+              (string-prefix-p "/Gmail" (mu4e-message-field msg :maildir))))
           :vars '((user-mail-address . "dinogreco2000@gmail.com")
-                  (user-full-name    . "Kostas Papadimos Gmail")
+                  (user-full-name    . "Kostas Papadimos")
+		  (smtpmail-smtp-server  . "smtp.gmail.com")
+                  (smtpmail-smtp-service . 465)
+                  (smtpmail-stream-type  . ssl)
                   (mu4e-drafts-folder  . "/Gmail/[Gmail]/Drafts")
                   (mu4e-sent-folder  . "/Gmail/[Gmail]/Sent Mail")
                   (mu4e-refile-folder  . "/Gmail/[Gmail]/All Mail")
                   (mu4e-trash-folder  . "/Gmail/[Gmail]/Trash")))))
-
+  
   (setq org-capture-templates
 	`(("m" "Email Workflow")
 	  ("mf" "Follow Up" entry (file+headline "~/org/Mail.org" "Follow Up")
@@ -405,8 +414,23 @@
   (mu4e t))
 ;; use org mode with mail 
 (require 'mu4e-org)
-
-;; I hope that this will make org mode to evaluate python code
+;; use org mode to compose emails 
+(add-to-list 'load-path (expand-file-name "~/.emacs.d/org-mime/" user-emacs-directory))
+(use-package org-mime
+  :ensure t)
+;; Configure the org-export template  
+(setq org-mime-export-options '(:section-numbers nil
+						 :with-author nil
+						 :with-toc nil))
+;; format the look of the code blocs inside mail 
+(add-hook 'org-mime-html-hook
+          (lambda ()
+            (org-mime-change-element-style
+             "pre" (format "color: %s; background-color: %s; padding: 0.5em;"
+                           "#E6E1DC" "#232323"))))
+;; automatically convert messages to org before sending them 
+(add-hook 'message-send-hook 'org-mime-htmlize)
+;; I hope that this will make org mode to evaluate python code-------------------------------------------
 (org-babel-do-load-languages
  'org-babel-load-languages
  '((python . t)))
@@ -427,3 +451,20 @@
 	("https://rss.app/feeds/u1j1RiyI51ZpTosP.xml" an music )
 	("https://politis.com.cy/feed/" cyprus news)))
 (global-set-key (kbd "C-x w") 'elfeed)
+;; Customise dired ----------------------------------------------------------------------------------------------------
+(use-package dired
+  :ensure nil
+  :commands (dired dired-jump)
+  :bind (("C-x C-j" . dired-jump))
+  :custom ((dired-listing-switches "-agho --group-directories-first"))
+  :config
+  (evil-collection-define-key 'normal 'dired-mode-map
+   "h" 'dired-up-directory
+   "l" 'dired-find-file))
+(add-to-list 'load-path (expand-file-name "~/.emacs.d/dired-single/" user-emacs-directory))
+(use-package dired-single)
+(use-package dired-hide-dotfiles
+  :hook (dired-mode . dired-hide-dotfiles-mode)
+  :config
+  (evil-collection-define-key 'normal 'dired-mode-map
+    "H" 'dired-hide-dotfiles-mode))
