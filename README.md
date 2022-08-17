@@ -1,54 +1,54 @@
 
 # Table of Contents
 
-1.  [Dependesies](#orgd2a350c)
-2.  [Installing the dependecies](#orgc29b8cd)
-    1.  [Basic packages from official repositories](#orgaa3d7cf)
-    2.  [other packages that are not in the official repositories](#org012bc20)
-        1.  [xkblayout](#org5a6eef3)
-        2.  [albert](#org2064917)
-3.  [Clone the dotfiles](#org5253bc7)
-4.  [Configure the fonts in the system](#orgd6d8e57)
-5.  [Set up Basic components of de](#org4b687b9)
-    1.  [Emacs](#org6e80bc7)
-        1.  [Create the emacs service to start the emacs server](#org438f840)
-        2.  [Install the packages that are not in melpa](#org98485c9)
-        3.  [mu4e set up](#orgc406516)
-    2.  [QuteBrowser](#org048fe2a)
-        1.  [install the dracula theme](#org05562a9)
+1.  [Dependesies](#org86f63e5)
+2.  [Installing the dependecies](#org471ec30)
+    1.  [Basic packages from official repositories](#orgac4ee93)
+    2.  [other packages that are not in the official repositories](#org88b6ffe)
+        1.  [xkblayout](#orgfb0f02d)
+        2.  [albert](#orgd1f7266)
+3.  [Clone the dotfiles](#org981122b)
+4.  [Configure the fonts in the system](#org63403e3)
+5.  [Set up Basic components of de](#orgce78d32)
+    1.  [Emacs](#org429d24f)
+        1.  [Create the emacs service to start the emacs server](#org643c8c1)
+        2.  [Install the packages that are not in melpa](#orgb8a304e)
+        3.  [mu4e set up](#orgff81802)
+    2.  [QuteBrowser](#org0d951a0)
+        1.  [install the dracula theme](#orge91b1ed)
 
 
-<a id="orgd2a350c"></a>
+<a id="org86f63e5"></a>
 
 # Dependesies
 
 The following packages are needed: 
 
--   python(official repositories)
--   xautolock(official repositories)
--   NetworkManager(official repositories)
--   pulseaudio(official repositories)
--   pavucontrol(official repositories)
--   emacs(official repositories)
--   alacritty(official repositories)
--   qutebrowser(official repositories)
--   pcmanfm(official repositories)
--   i3blocks(official repositories)
+-   python
+-   xautolock
+-   NetworkManager
+-   pulseaudio
+-   pavucontrol
+-   emacs
+-   alacritty
+-   qutebrowser
+-   pcmanfm
+-   i3blocks
 -   i3lock-fancy-rapid
--   light(official repositories)
--   playerctl(official repositories)
--   screenshot.sh(user program)
--   blueman(official repositories)
--   nitrogen(official repositories)
--   picom(official repositories)
+-   light
+-   playerctl
+-   screenshot.sh
+-   blueman
+-   nitrogen
+-   picom
 -   albert
 -   xf86-input-synaptics(not available for fedora)
--   rclone(official repositories)
--   acpi(official repositories)
--   dunst(official repositories)
+-   rclone
+-   acpi
+-   dunst
 -   xkblayout-state-git
--   xprop(official repositories)
--   xset (official repositories)
+-   xprop
+-   xset
 -   scrot
 -   git
 -   isync
@@ -59,12 +59,12 @@ The following packages are needed:
 -   fonts
 
 
-<a id="orgc29b8cd"></a>
+<a id="org471ec30"></a>
 
 # Installing the dependecies
 
 
-<a id="orgaa3d7cf"></a>
+<a id="orgac4ee93"></a>
 
 ## Basic packages from official repositories
 
@@ -74,12 +74,12 @@ Run the following **as root**. Replace `dnf install` with the package manager co
     dnf install python xautolock NetworkManager pulseaudio pavucontrol emacs alacritty qutebrowser pcmanfm i3blocks light playerctl blueman nitrogen picom albert rclone acpi dunst xprop xset scrot git mupdf isync mu4e libtool libvterm mpv
 
 
-<a id="org012bc20"></a>
+<a id="org88b6ffe"></a>
 
 ## other packages that are not in the official repositories
 
 
-<a id="org5a6eef3"></a>
+<a id="orgfb0f02d"></a>
 
 ### xkblayout
 
@@ -91,14 +91,14 @@ To install xkblayout run the following **as root**
     cp ~/xkblayout-state/xkblayout-state /usr/bin/xkblayout-state
 
 
-<a id="org2064917"></a>
+<a id="orgd1f7266"></a>
 
 ### albert
 
 To install albert launcher follow  [the instructions](https://albertlauncher.github.io/installing/) on their webpage
 
 
-<a id="org5253bc7"></a>
+<a id="org981122b"></a>
 
 # Clone the dotfiles
 
@@ -125,24 +125,24 @@ More on this here: [The best way to store your dotfiles](https://www.atlassian.c
     config config status.showUntrackedFiles no
 
 
-<a id="orgd6d8e57"></a>
+<a id="org63403e3"></a>
 
 # Configure the fonts in the system
 
 Fonts folder is in the repo so when the config-install script runs, fonts are downloaded and placed in the correct path.
 
 
-<a id="org4b687b9"></a>
+<a id="orgce78d32"></a>
 
 # Set up Basic components of de
 
 
-<a id="org6e80bc7"></a>
+<a id="org429d24f"></a>
 
 ## Emacs
 
 
-<a id="org438f840"></a>
+<a id="org643c8c1"></a>
 
 ### Create the emacs service to start the emacs server
 
@@ -156,7 +156,7 @@ To install the service do the following, **Not as root:**
 More about emacs service: [Emacs as Daemon](https://www.emacswiki.org/emacs/EmacsAsDaemon)
 
 
-<a id="org98485c9"></a>
+<a id="orgb8a304e"></a>
 
 ### Install the packages that are not in melpa
 
@@ -169,7 +169,7 @@ git clone <https://github.com/org-mime/org-mime>
 \#+end<sub>scr</sub>
 
 
-<a id="orgc406516"></a>
+<a id="orgff81802"></a>
 
 ### mu4e set up
 
@@ -190,12 +190,12 @@ script that sets mu4e up. More about mu4e can be found here: [Emacs-mail](https:
     mu index
 
 
-<a id="org048fe2a"></a>
+<a id="org0d951a0"></a>
 
 ## QuteBrowser
 
 
-<a id="org05562a9"></a>
+<a id="orge91b1ed"></a>
 
 ### install the dracula theme
 
