@@ -224,18 +224,18 @@
   ;(pdf-annot-activate-created-annotations t "automatically annotate highlights"))
 
 ;; Conda configuration-------------------------------------------------
-(use-package conda)
-(require 'conda)
+;(use-package conda)
+;(require 'conda)
 ;; if you want interactive shell support, includee
-(conda-env-initialize-interactive-shells)
+;(conda-env-initialize-interactive-shells)
 ;; if you want eshell support, include:
-(conda-env-initialize-eshell)
+;(conda-env-initialize-eshell)
 ;; if you want auto-activation (see below for details), include:
 ;;(conda-env-autoactivate-mode t)
-(setq-default mode-line-format (cons '(:exec conda-env-current-name) mode-line-format))
-(setq conda-env-home-directory
-      (expand-file-name "~/miniconda3/")
-      conda-env-subdirectory "envs")
+;(setq-default mode-line-format (cons '(:exec conda-env-current-name) mode-line-format))
+;(setq conda-env-home-directory
+;      (expand-file-name "~/miniconda3/")
+;      conda-env-subdirectory "envs")
 
 
 ;; variables added by custom -------------------------------------------
