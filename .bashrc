@@ -50,7 +50,7 @@ alias camera='mpv av://v4l2:/dev/video0 --profile=low-latency --untimed'
 alias nf='neofetch'
 #gupload is way to big to write it every time
 alias gu='gupload'
-alias config='/usr/bin/git --git-dir=$HOME/dotfiles --work-tree=$HOME'
+alias config='/usr/bin/git --git-dir=$HOME/.dotfiles --work-tree=$HOME'
 ## Locale settings ##
 #export LC_ALL=el_GR.UTF-8
 
