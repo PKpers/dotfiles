@@ -1,0 +1,138 @@
+* Dependencies
+The following packages are needed: 
+- python
+- i3
+- xautolock
+- NetworkManager
+- pulseaudio
+- pavucontrol
+- emacs
+- alacritty
+- qutebrowser
+- pcmanfm
+- i3blocks
+- i3lock-fancy-rapid
+- light
+- playerctl
+- blueman
+- nitrogen
+- picom
+- albert
+- xf86-input-synaptics(not available for fedora)
+- rclone
+- acpi
+- dunst
+- xkblayout-state-git
+- xprop
+- xset 
+- scrot
+- git
+- isync
+- mupdf
+- maildir-utils
+- libtool
+- mpv
+- fonts
+* Installing the dependecies
+** Basic packages from official repositories
+Run the following *as root*. Replace =dnf install= with the package manager command of the distro in use.
+#+begin_src bash
+  # run this as sudo
+  dnf install i3 python xautolock NetworkManager pulseaudio pavucontrol emacs alacritty qutebrowser pcmanfm i3blocks light playerctl blueman nitrogen picom albert rclone acpi dunst xprop xset scrot git mupdf isync mu4e libtool libvterm mpv
+#+end_src
+** other packages that are not in the official repositories
+*** xkblayout
+To install xkblayout run the following *as root*
+#+begin_src bash
+  git clone https://github.com/nonpop/xkblayout-state
+  cd xkblayout-state
+  make
+  cp ~/xkblayout-state/xkblayout-state /usr/bin/xkblayout-state
+#+end_src
+*** albert
+To install albert launcher follow  [[https://albertlauncher.github.io/installing/][the instructions]] on their webpage
+* Clone the dotfiles
+Using a git bare repositoriy, so that I will be able to manage dotfiles more easily.
+More on this here: [[https://www.atlassian.com/git/tutorials/dotfiles][The best way to store your dotfiles]]
+#+begin_src bash
+  #!/bin/bash
+  #create the  directory to host the bare repostitory
+  mkdir .dotfiles
+  #
+  echo  "alias config='/usr/bin/git --git-dir=$HOME/.dotfiles/ --work-tree=$HOME'" >> .bashrc
+  git clone --bare https://github.com/PKpers/dotfiles $HOME/.dotfiles
+  function config {
+     /usr/bin/git --git-dir=$HOME/.dotfiles/ --work-tree=$HOME $@
+  }
+  mkdir -p .config-backup
+  config checkout
+  if [ $? = 0 ]; then
+      echo "Checked out config.";
+  else
+      echo "Backing up pre-existing dot files.";
+      config checkout 2>&1 | egrep "\s+\." | awk {'print $1'} | xargs -I{} mv {} .config-backup/{}
+  fi;
+  config checkout
+  config config status.showUntrackedFiles no
+#+end_src
+* Sytem fonts and theme
+** Fonts(Icons and text)
+Fonts folder is in the repo so when the config-install script runs, fonts are downloaded and placed in the correct path.
+** System theme, system icons and cursors
+System, icons and cursor themes are configured in =~/.config/gtk-3.0/settings.ini= . Once the dotfiles repo is cloned, one has to just install the fonts so that =setttings.ini= can read them:
+#+begin_src bash
+cd ~
+#System theme installation
+mkdir ~/.local/share/themes
+git clone https://github.com/dracula/gtk ~/.themes/dracula-theme 
+#Icon theme installation
+wget -qO- https://git.io/papirus-icon-theme-install | DESTDIR="$HOME/.icons" sh
+mv ~/.icons ~/.local/share/icons
+#install the cursor theme
+cd ~/.themes/dracula-theme/kde/cursors/
+chmod a+x build.sh
+./build.sh
+cp Dracula-cursors ~/.local/share/.icons/
+#+end_src
+* Set up Basic components of de
+** Emacs
+*** Create the emacs service to start the emacs server 
+To install the service do the following, *Not as root:*
+#+begin_src bash
+cd ~
+cp ~/services/emacs.service ~/.config/systemd/user/emacs.service
+systemctl enable --user emacs
+systemctl start --user emacs
+#+end_src
+More about emacs service: [[https://www.emacswiki.org/emacs/EmacsAsDaemon][Emacs as Daemon]]
+*** Install the packages that are not in melpa
+To install the packages that are not in melpa, simply do:
+#+begin_src bash
+cd ~/.emacs.d
+git clone https://github.com/crocket/dired-single
+git clone https://github.com/emacs-evil/evil-collection
+git clone https://github.com/org-mime/org-mime
+#+end_src
+*** mu4e set up
+script that sets mu4e up. More about mu4e can be found here: [[https://github.com/daviwil/emacs-from-scratch/blob/629aec3dbdffe99e2c361ffd10bd6727555a3bd3/show-notes/Emacs-Mail-01.org][Emacs-mail]]
+#+begin_src bash
+  #Prepare the enviroment
+  cd ~
+  echo "Please enter your email address"
+  read email
+  echo "please enter you email password"
+  read password
+  echo "$password" >> ~/.pswd #put password to this folder so mbsync can read it 
+  mkdir -p ~/Mail/Gmail/Inbox #Create the directories where the mail will be stored 
+  #Start the initial sync
+  mbsync -a
+  #Setting up mu to index the mailbox
+  mu init --maildir=~/Mail --my-address="$email"
+  mu index
+#+end_src
+** QuteBrowser
+*** install the dracula theme
+#+begin_src bash
+  git clone https://github.com/dracula/qutebrowser-dracula-theme.git ~/.config/qutebrowser/dracula/
+  echo ".config/qutebrowser/dracula/" >> .gitignore #dracula is a git repository
+#+end_src
