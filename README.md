@@ -1,24 +1,24 @@
 
 # Table of Contents
 
-1.  [Dependesies](#org86f63e5)
-2.  [Installing the dependecies](#org471ec30)
-    1.  [Basic packages from official repositories](#orgac4ee93)
-    2.  [other packages that are not in the official repositories](#org88b6ffe)
-        1.  [xkblayout](#orgfb0f02d)
-        2.  [albert](#orgd1f7266)
-3.  [Clone the dotfiles](#org981122b)
-4.  [Configure the fonts in the system](#org63403e3)
-5.  [Set up Basic components of de](#orgce78d32)
-    1.  [Emacs](#org429d24f)
-        1.  [Create the emacs service to start the emacs server](#org643c8c1)
-        2.  [Install the packages that are not in melpa](#orgb8a304e)
-        3.  [mu4e set up](#orgff81802)
-    2.  [QuteBrowser](#org0d951a0)
-        1.  [install the dracula theme](#orge91b1ed)
+1.  [Dependesies](#orgff1f75f)
+2.  [Installing the dependecies](#org95185ba)
+    1.  [Basic packages from official repositories](#orge9d5967)
+    2.  [other packages that are not in the official repositories](#org0b7433a)
+        1.  [xkblayout](#org17183bb)
+        2.  [albert](#orga60f854)
+3.  [Clone the dotfiles](#org8749af1)
+4.  [Configure the fonts in the system](#org6dd0713)
+5.  [Set up Basic components of de](#org632f2cc)
+    1.  [Emacs](#orga389209)
+        1.  [Create the emacs service to start the emacs server](#org20f3ee7)
+        2.  [Install the packages that are not in melpa](#orgea5e37f)
+        3.  [mu4e set up](#orgef2aea8)
+    2.  [QuteBrowser](#orge1ce6c1)
+        1.  [install the dracula theme](#org921f837)
 
 
-<a id="org86f63e5"></a>
+<a id="orgff1f75f"></a>
 
 # Dependesies
 
@@ -59,12 +59,12 @@ The following packages are needed:
 -   fonts
 
 
-<a id="org471ec30"></a>
+<a id="org95185ba"></a>
 
 # Installing the dependecies
 
 
-<a id="orgac4ee93"></a>
+<a id="orge9d5967"></a>
 
 ## Basic packages from official repositories
 
@@ -74,12 +74,12 @@ Run the following **as root**. Replace `dnf install` with the package manager co
     dnf install python xautolock NetworkManager pulseaudio pavucontrol emacs alacritty qutebrowser pcmanfm i3blocks light playerctl blueman nitrogen picom albert rclone acpi dunst xprop xset scrot git mupdf isync mu4e libtool libvterm mpv
 
 
-<a id="org88b6ffe"></a>
+<a id="org0b7433a"></a>
 
 ## other packages that are not in the official repositories
 
 
-<a id="orgfb0f02d"></a>
+<a id="org17183bb"></a>
 
 ### xkblayout
 
@@ -91,14 +91,14 @@ To install xkblayout run the following **as root**
     cp ~/xkblayout-state/xkblayout-state /usr/bin/xkblayout-state
 
 
-<a id="orgd1f7266"></a>
+<a id="orga60f854"></a>
 
 ### albert
 
 To install albert launcher follow  [the instructions](https://albertlauncher.github.io/installing/) on their webpage
 
 
-<a id="org981122b"></a>
+<a id="org8749af1"></a>
 
 # Clone the dotfiles
 
@@ -125,24 +125,24 @@ More on this here: [The best way to store your dotfiles](https://www.atlassian.c
     config config status.showUntrackedFiles no
 
 
-<a id="org63403e3"></a>
+<a id="org6dd0713"></a>
 
 # Configure the fonts in the system
 
 Fonts folder is in the repo so when the config-install script runs, fonts are downloaded and placed in the correct path.
 
 
-<a id="orgce78d32"></a>
+<a id="org632f2cc"></a>
 
 # Set up Basic components of de
 
 
-<a id="org429d24f"></a>
+<a id="orga389209"></a>
 
 ## Emacs
 
 
-<a id="org643c8c1"></a>
+<a id="org20f3ee7"></a>
 
 ### Create the emacs service to start the emacs server
 
@@ -156,20 +156,19 @@ To install the service do the following, **Not as root:**
 More about emacs service: [Emacs as Daemon](https://www.emacswiki.org/emacs/EmacsAsDaemon)
 
 
-<a id="orgb8a304e"></a>
+<a id="orgea5e37f"></a>
 
 ### Install the packages that are not in melpa
 
 To install the packages that are not in melpa, simply do:
-\#+begin<sub>src</sub> bash
-cd ~/.emacs.d
-git clone <https://github.com/crocket/dired-single>
-git clone <https://github.com/emacs-evil/evil-collection>
-git clone <https://github.com/org-mime/org-mime>
-\#+end<sub>scr</sub>
+
+    cd ~/.emacs.d
+    git clone https://github.com/crocket/dired-single
+    git clone https://github.com/emacs-evil/evil-collection
+    git clone https://github.com/org-mime/org-mime
 
 
-<a id="orgff81802"></a>
+<a id="orgef2aea8"></a>
 
 ### mu4e set up
 
@@ -190,12 +189,12 @@ script that sets mu4e up. More about mu4e can be found here: [Emacs-mail](https:
     mu index
 
 
-<a id="org0d951a0"></a>
+<a id="orge1ce6c1"></a>
 
 ## QuteBrowser
 
 
-<a id="orge91b1ed"></a>
+<a id="org921f837"></a>
 
 ### install the dracula theme
 
