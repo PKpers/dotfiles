@@ -1,24 +1,24 @@
 
 # Table of Contents
 
-1.  [Dependencies](#orgc75b9cb)
-2.  [Installing the dependecies](#org44c8692)
-    1.  [Basic packages from official repositories](#orga9771db)
-    2.  [other packages that are not in the official repositories](#org1a89f2a)
-        1.  [xkblayout](#orgf60081e)
-        2.  [albert](#org48de65c)
-3.  [Clone the dotfiles](#orgb1c0afe)
-4.  [Configure the fonts in the system](#org6f77911)
-5.  [Set up Basic components of de](#orgdd996b4)
-    1.  [Emacs](#org7434724)
-        1.  [Create the emacs service to start the emacs server](#org2fd16f6)
-        2.  [Install the packages that are not in melpa](#org47307a4)
-        3.  [mu4e set up](#orge56e1a5)
-    2.  [QuteBrowser](#orgda538e3)
-        1.  [install the dracula theme](#org2f89424)
+1.  [Dependencies](#orgc45a57b)
+2.  [Installing the dependecies](#org7731159)
+    1.  [Basic packages from official repositories](#orga1e7ca4)
+    2.  [other packages that are not in the official repositories](#org9186623)
+        1.  [xkblayout](#org72d22f5)
+        2.  [albert](#org69f8dfe)
+3.  [Clone the dotfiles](#org538abf6)
+4.  [Configure the fonts in the system](#org77f44f9)
+5.  [Set up Basic components of de](#org8799908)
+    1.  [Emacs](#org0ff2214)
+        1.  [Create the emacs service to start the emacs server](#org831c5e3)
+        2.  [Install the packages that are not in melpa](#orga0918be)
+        3.  [mu4e set up](#org1510bc7)
+    2.  [QuteBrowser](#orgf72bf91)
+        1.  [install the dracula theme](#org699c13b)
 
 
-<a id="orgc75b9cb"></a>
+<a id="orgc45a57b"></a>
 
 # Dependencies
 
@@ -37,7 +37,6 @@ The following packages are needed:
 -   i3lock-fancy-rapid
 -   light
 -   playerctl
--   screenshot.sh
 -   blueman
 -   nitrogen
 -   picom
@@ -59,12 +58,12 @@ The following packages are needed:
 -   fonts
 
 
-<a id="org44c8692"></a>
+<a id="org7731159"></a>
 
 # Installing the dependecies
 
 
-<a id="orga9771db"></a>
+<a id="orga1e7ca4"></a>
 
 ## Basic packages from official repositories
 
@@ -74,12 +73,12 @@ Run the following **as root**. Replace `dnf install` with the package manager co
     dnf install python xautolock NetworkManager pulseaudio pavucontrol emacs alacritty qutebrowser pcmanfm i3blocks light playerctl blueman nitrogen picom albert rclone acpi dunst xprop xset scrot git mupdf isync mu4e libtool libvterm mpv
 
 
-<a id="org1a89f2a"></a>
+<a id="org9186623"></a>
 
 ## other packages that are not in the official repositories
 
 
-<a id="orgf60081e"></a>
+<a id="org72d22f5"></a>
 
 ### xkblayout
 
@@ -91,20 +90,21 @@ To install xkblayout run the following **as root**
     cp ~/xkblayout-state/xkblayout-state /usr/bin/xkblayout-state
 
 
-<a id="org48de65c"></a>
+<a id="org69f8dfe"></a>
 
 ### albert
 
 To install albert launcher follow  [the instructions](https://albertlauncher.github.io/installing/) on their webpage
 
 
-<a id="orgb1c0afe"></a>
+<a id="org538abf6"></a>
 
 # Clone the dotfiles
 
 Using a git bare repositoriy, so that I will be able to manage dotfiles more easily.
 More on this here: [The best way to store your dotfiles](https://www.atlassian.com/git/tutorials/dotfiles)
 
+    #!/bin/bash
     #create the  directory to host the bare repostitory
     mkdir .dotfiles
     #
@@ -125,24 +125,24 @@ More on this here: [The best way to store your dotfiles](https://www.atlassian.c
     config config status.showUntrackedFiles no
 
 
-<a id="org6f77911"></a>
+<a id="org77f44f9"></a>
 
 # Configure the fonts in the system
 
 Fonts folder is in the repo so when the config-install script runs, fonts are downloaded and placed in the correct path.
 
 
-<a id="orgdd996b4"></a>
+<a id="org8799908"></a>
 
 # Set up Basic components of de
 
 
-<a id="org7434724"></a>
+<a id="org0ff2214"></a>
 
 ## Emacs
 
 
-<a id="org2fd16f6"></a>
+<a id="org831c5e3"></a>
 
 ### Create the emacs service to start the emacs server
 
@@ -156,7 +156,7 @@ To install the service do the following, **Not as root:**
 More about emacs service: [Emacs as Daemon](https://www.emacswiki.org/emacs/EmacsAsDaemon)
 
 
-<a id="org47307a4"></a>
+<a id="orga0918be"></a>
 
 ### Install the packages that are not in melpa
 
@@ -168,7 +168,7 @@ To install the packages that are not in melpa, simply do:
     git clone https://github.com/org-mime/org-mime
 
 
-<a id="orge56e1a5"></a>
+<a id="org1510bc7"></a>
 
 ### mu4e set up
 
@@ -189,12 +189,12 @@ script that sets mu4e up. More about mu4e can be found here: [Emacs-mail](https:
     mu index
 
 
-<a id="orgda538e3"></a>
+<a id="orgf72bf91"></a>
 
 ## QuteBrowser
 
 
-<a id="org2f89424"></a>
+<a id="org699c13b"></a>
 
 ### install the dracula theme
 
