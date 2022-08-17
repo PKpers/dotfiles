@@ -1,26 +1,26 @@
 
 # Table of Contents
 
-1.  [Dependencies](#orgfcd7d7c)
-2.  [Installing the dependecies](#orgecee3ad)
-    1.  [Basic packages from official repositories](#org8fdaa6f)
-    2.  [other packages that are not in the official repositories](#org0d2f16a)
-        1.  [xkblayout](#org828b53e)
-        2.  [albert](#orgb28123f)
-3.  [Clone the dotfiles](#org261abf3)
-4.  [Sytem fonts and theme](#orgdbd2f21)
-    1.  [Fonts(Icons and text)](#org08a9f9d)
-    2.  [Theme, icons and cursors](#org931c24c)
-5.  [Set up Basic components of de](#org9bd2385)
-    1.  [Emacs](#org9a69766)
-        1.  [Create the emacs service to start the emacs server](#orgb890df0)
-        2.  [Install the packages that are not in melpa](#org762db0d)
-        3.  [mu4e set up](#org70572d8)
-    2.  [QuteBrowser](#orgcbf2b8f)
-        1.  [install the dracula theme](#org5a42fe0)
+1.  [Dependencies](#orgc95f224)
+2.  [Installing the dependecies](#org98b8f95)
+    1.  [Basic packages from official repositories](#orge81ed65)
+    2.  [other packages that are not in the official repositories](#org2cf7c91)
+        1.  [xkblayout](#org6155236)
+        2.  [albert](#org6bc2b1c)
+3.  [Clone the dotfiles](#orgfb0a414)
+4.  [Sytem fonts and theme](#org4e34a4e)
+    1.  [Fonts(Icons and text)](#orgdbd7912)
+    2.  [System theme, system icons and cursors](#orgc63fa52)
+5.  [Set up Basic components of de](#org05515b8)
+    1.  [Emacs](#org02fc1a1)
+        1.  [Create the emacs service to start the emacs server](#orgbff2cfc)
+        2.  [Install the packages that are not in melpa](#org1f8d373)
+        3.  [mu4e set up](#orgd95945a)
+    2.  [QuteBrowser](#org44de9b1)
+        1.  [install the dracula theme](#org5f7fbbd)
 
 
-<a id="orgfcd7d7c"></a>
+<a id="orgc95f224"></a>
 
 # Dependencies
 
@@ -61,12 +61,12 @@ The following packages are needed:
 -   fonts
 
 
-<a id="orgecee3ad"></a>
+<a id="org98b8f95"></a>
 
 # Installing the dependecies
 
 
-<a id="org8fdaa6f"></a>
+<a id="orge81ed65"></a>
 
 ## Basic packages from official repositories
 
@@ -76,12 +76,12 @@ Run the following **as root**. Replace `dnf install` with the package manager co
     dnf install i3 python xautolock NetworkManager pulseaudio pavucontrol emacs alacritty qutebrowser pcmanfm i3blocks light playerctl blueman nitrogen picom albert rclone acpi dunst xprop xset scrot git mupdf isync mu4e libtool libvterm mpv
 
 
-<a id="org0d2f16a"></a>
+<a id="org2cf7c91"></a>
 
 ## other packages that are not in the official repositories
 
 
-<a id="org828b53e"></a>
+<a id="org6155236"></a>
 
 ### xkblayout
 
@@ -93,14 +93,14 @@ To install xkblayout run the following **as root**
     cp ~/xkblayout-state/xkblayout-state /usr/bin/xkblayout-state
 
 
-<a id="orgb28123f"></a>
+<a id="org6bc2b1c"></a>
 
 ### albert
 
 To install albert launcher follow  [the instructions](https://albertlauncher.github.io/installing/) on their webpage
 
 
-<a id="org261abf3"></a>
+<a id="orgfb0a414"></a>
 
 # Clone the dotfiles
 
@@ -128,21 +128,21 @@ More on this here: [The best way to store your dotfiles](https://www.atlassian.c
     config config status.showUntrackedFiles no
 
 
-<a id="orgdbd2f21"></a>
+<a id="org4e34a4e"></a>
 
 # Sytem fonts and theme
 
 
-<a id="org08a9f9d"></a>
+<a id="orgdbd7912"></a>
 
 ## Fonts(Icons and text)
 
 Fonts folder is in the repo so when the config-install script runs, fonts are downloaded and placed in the correct path.
 
 
-<a id="org931c24c"></a>
+<a id="orgc63fa52"></a>
 
-## Theme, icons and cursors
+## System theme, system icons and cursors
 
 System, icons and cursor themes are configured in `~/.config/gtk-3.0/settings.ini` . Once the dotfiles repo is cloned, one has to just install the fonts so that `setttings.ini` can read them:
 
@@ -160,17 +160,17 @@ System, icons and cursor themes are configured in `~/.config/gtk-3.0/settings.in
     cp Dracula-cursors ~/.local/share/.icons/
 
 
-<a id="org9bd2385"></a>
+<a id="org05515b8"></a>
 
 # Set up Basic components of de
 
 
-<a id="org9a69766"></a>
+<a id="org02fc1a1"></a>
 
 ## Emacs
 
 
-<a id="orgb890df0"></a>
+<a id="orgbff2cfc"></a>
 
 ### Create the emacs service to start the emacs server
 
@@ -184,7 +184,7 @@ To install the service do the following, **Not as root:**
 More about emacs service: [Emacs as Daemon](https://www.emacswiki.org/emacs/EmacsAsDaemon)
 
 
-<a id="org762db0d"></a>
+<a id="org1f8d373"></a>
 
 ### Install the packages that are not in melpa
 
@@ -196,7 +196,7 @@ To install the packages that are not in melpa, simply do:
     git clone https://github.com/org-mime/org-mime
 
 
-<a id="org70572d8"></a>
+<a id="orgd95945a"></a>
 
 ### mu4e set up
 
@@ -217,12 +217,12 @@ script that sets mu4e up. More about mu4e can be found here: [Emacs-mail](https:
     mu index
 
 
-<a id="orgcbf2b8f"></a>
+<a id="org44de9b1"></a>
 
 ## QuteBrowser
 
 
-<a id="org5a42fe0"></a>
+<a id="org5f7fbbd"></a>
 
 ### install the dracula theme
 
