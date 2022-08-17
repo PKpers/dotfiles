@@ -130,14 +130,8 @@ for_window [class="zoom"] move to workspace $ws9
 for_window [class= "Thunar"] floating enable 
 for_window [class= "Pcmanfm"] floating enable 
 for_window [class= "matplotlib"] floating enable 
-#for_window [class= "Gnome-calculator"] floating enable border disable
-#for_window [class= "Gnome-calendar"] floating enable border disable
 for_window [class= "Ristretto"] floating enable
 for_window [class= "Blueman-manager"] floating enable #border disable
-#for_window[class="Xfce4-appfinder"] floating enable #border disable
-#for_window[class="Xfce4-panel"] floating enable# border disable
-#for_window[class="Xfce4-appearance-settings"] floating enable #border disable
-#for_window[class="Xfce4-settings-manager"] floating enable #border disable
 for_window[class= "Pavucontrol"] floating enable #border disable
 for_window[class="Alacritty"] floating enable
 
@@ -149,7 +143,7 @@ bindsym $mod+Shift+r restart
 bindsym $mod+Shift+e exec "i3-nagbar -t warning -m 'You pressed the exit shortcut. Do you really want to exit i3? This will end your X session.' -B 'Yes, exit i3' 'i3-msg exit'"
 #key bindings to start the most used applications
 bindsym $mod+Control+e exec emacsclient -c -a 'emacs'
-bindsym $mod+Control+t exec emacsclient -c -e '(vterm "bash")' -a ""
+bindsym $mod+Control+t exec alacritty  
 bindsym $mod+Control+b exec qutebrowser
 bindsym $mod+Control+f exec pcmanfm
 
@@ -250,6 +244,5 @@ exec_always picom  --experimental-backends &#--config ~/.config/picom/picom.conf
 exec_always albert
 exec syndaemon -i 0.5 -t -K -R -d # deactivates the touchpad when key presses occour
 exec_always rclone --vfs-cache-mode writes mount onedrive: ~/onedrive #sync with onedrive
-exec thunar --daemon #keep thunar running in the background when the last window is closed 
 exec pcmanfm -d 
 

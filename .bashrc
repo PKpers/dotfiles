@@ -56,3 +56,5 @@ alias config='/usr/bin/git --git-dir=$HOME/dotfiles --work-tree=$HOME'
 
 ## $PATH settings ##
 export PATH=/home/kpapad/.local/bin:$PATH
+## Remove duplicates from history ##
+export HISTCONTROL=ignoredups

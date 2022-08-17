@@ -27,7 +27,7 @@
 #command=/usr/share/i3blocks/$BLOCK_NAME/$BLOCK_NAME
 separator_block_width=20
 markup=none
-
+LANG=el_GR.UTF-8
 # Key indicators
 #
 # Add the following bindings to i3 config file:
