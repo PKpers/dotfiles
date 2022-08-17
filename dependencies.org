@@ -32,13 +32,15 @@ The following packages are needed:
 - maildir-utils
 - libtool
 - mpv
+- inkspace
+- xcursorgen
 - fonts
 * Installing the dependecies
 ** Basic packages from official repositories
 Run the following *as root*. Replace =dnf install= with the package manager command of the distro in use.
 #+begin_src bash
   # run this as sudo
-  dnf install i3 python xautolock NetworkManager pulseaudio pavucontrol emacs alacritty qutebrowser pcmanfm i3blocks light playerctl blueman nitrogen picom albert rclone acpi dunst xprop xset scrot git mupdf isync mu4e libtool libvterm mpv
+  dnf install i3 python xautolock NetworkManager pulseaudio pavucontrol emacs alacritty qutebrowser pcmanfm i3blocks light playerctl blueman nitrogen picom albert rclone acpi dunst xprop xset scrot git mupdf isync mu4e libtool libvterm mpv xcursorgen inkspace
 #+end_src
 ** other packages that are not in the official repositories
 *** xkblayout
