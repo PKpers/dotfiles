@@ -1,15 +1,45 @@
 [
     {
+        "iconPath": "/home/kpapad/.config/albert/org.albert.extension.websearch/{ce66ddd9-2b9e-455b-b17e-7407c0d8cc71}.",
+        "name": "DuckDuckGo",
+        "trigger": "dd ",
+        "url": "https://duckduckgo.com/?q=%s"
+    },
+    {
         "iconPath": "/home/kpapad/.config/albert/org.albert.extension.websearch/{af6e68f3-5250-4ff6-b554-bd7e0ca238d6}.",
         "name": "Google",
         "trigger": "gg ",
         "url": "https://www.google.com/search?q=%s"
     },
     {
+        "iconPath": "/home/kpapad/.config/albert/org.albert.extension.websearch/{527be900-5127-4a09-b912-a3bfa0d0eced}.png",
+        "name": "Physics Stack Exchange",
+        "trigger": "pe",
+        "url": "https://physics.stackexchange.com/search?q=%s"
+    },
+    {
+        "iconPath": "/home/kpapad/.config/albert/org.albert.extension.websearch/{5459202b-6313-4886-92bc-aaccfced618e}.png",
+        "name": "WordReference ",
+        "trigger": "wr",
+        "url": "https://www.wordreference.com/definition/%s"
+    },
+    {
+        "iconPath": "/home/kpapad/.config/albert/org.albert.extension.websearch/{ab81afc2-e07f-4cee-8347-7ed66ddf4770}.png",
+        "name": "reddit",
+        "trigger": "rr",
+        "url": "https://www.reddit.com/search/?q=%s"
+    },
+    {
         "iconPath": "/home/kpapad/.config/albert/org.albert.extension.websearch/{90d4d92c-d816-435e-837f-984275927627}.",
         "name": "Youtube",
         "trigger": "yy",
         "url": "https://www.youtube.com/results?search_query=%s"
+    },
+    {
+        "iconPath": ":github",
+        "name": "GitHub",
+        "trigger": "gh ",
+        "url": "https://github.com/search?utf8=✓&q=%s"
     },
     {
         "iconPath": ":amazon",
@@ -24,21 +54,9 @@
         "url": "http://www.ebay.com/sch/i.html?_nkw=%s"
     },
     {
-        "iconPath": ":github",
-        "name": "GitHub",
-        "trigger": "gh ",
-        "url": "https://github.com/search?utf8=✓&q=%s"
-    },
-    {
-        "iconPath": ":wolfram",
-        "name": "Wolfram Alpha",
-        "trigger": "=",
-        "url": "https://www.wolframalpha.com/input/?i=%s"
-    },
-    {
-        "iconPath": "/home/kpapad/.config/albert/org.albert.extension.websearch/{ce66ddd9-2b9e-455b-b17e-7407c0d8cc71}.",
-        "name": "DuckDuckGo",
-        "trigger": "dd ",
-        "url": "https://duckduckgo.com/?q=%s"
+        "iconPath": "/home/kpapad/.config/albert/org.albert.extension.websearch/{59b50746-b66c-4b72-b65f-a023b1571a37}.",
+        "name": "Wolfram Mathworld",
+        "trigger": "mm",
+        "url": "https://mathworld.wolfram.com/search/?query=%s"
     }
 ]

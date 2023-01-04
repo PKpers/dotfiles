@@ -204,16 +204,52 @@
   (buffer-face-mode))
 (add-hook 'prog-mode-hook 'my-buffer-face-mode-dyslexic)
 
-;OpenDyslexic Nerd Font
-;;Package Manager Configuration ---------------------------------------
-;; initialize package sources
+;; Configure spelling ----------------------------------------------------------------------------------------------------
+(require 'ispell)
+(setenv
+ "DICPATH"
+ "/usr/share/hunspell")
+;;
+(add-to-list 'ispell-local-dictionary-alist '("greek-hunspell"
+                                              "[[:alpha:]]"
+                                              "[^[:alpha:]]"
+                                              "[']"
+                                              t
+                                              ("-d" "el_GR"); Dictionary file name
+                                              nil
+                                              iso-8859-1))
 
+(add-to-list 'ispell-local-dictionary-alist '("english-hunspell"
+                                              "[[:alpha:]]"
+                                              "[^[:alpha:]]"
+                                              "[']"
+                                              t
+                                              ("-d" "en_US")
+                                              nil
+                                              iso-8859-1))
+
+(setq ispell-program-name "hunspell"          ; Use hunspell to correct mistakes
+      ispell-dictionary   "en_US") ; Default dictionary to use
+
+(defun  fd-switch-dictionary()
+  "Switch greek and english dictionaries."
+  (interactive)
+  (let* ((dict ispell-current-dictionary)
+	 (new (if (string= dict "el_GR") "en_US"
+		"el_GR")))
+    (ispell-change-dictionary new)
+    (message "Switched dictionary from %s to %s" dict new)))
+
+(global-set-key (kbd "<f8>") 'fd-switch-dictionary)
+(add-hook 'org-mode-hook 'turn-on-flyspell)
 ;; PDF files-------------------------------------------------------------
 ;; somehow pdf-tools is broken. Untill its fixed I will use mupdf as emacs default pdf reader with the use of open with package
 (use-package openwith)
 (require 'openwith)
-(setq openwith-associations '(("\\.pdf\\'" "mupdf" (file))))
+(setq openwith-associations '(("\\.pdf\\'" "mupdf" (file))
+			       ("\\.odp\\'" "libreoffice " (file))))
 (openwith-mode t)
+
 ;(use-package pdf-tools
 ;  :pin manual
 ;  :config
@@ -300,6 +336,7 @@
 (use-package org
   :hook (org-mode . efs/org-mode-setup)
   :config
+  (setq org-format-latex-options (plist-put org-format-latex-options :scale 2.0))
   (setq org-ellipsis " ▾"
 	org-hide-emphasis-markers t)
   
@@ -425,13 +462,85 @@
  ; (eshell-git-prompt-use-theme 'default))
 ;; org export to latex conifg----------------------------------------
 (require 'ox-latex)
+(setq org-latex-pdf-process
+      '("latexmk -pdflatex='pdflatex -interaction nonstopmode' -pdf -bibtex -f %f"))
+
 (unless (boundp 'org-latex-classes)
   (setq org-latex-classes nil))
+;; CV template
+(add-to-list 'org-latex-classes
+	     '("CV"
+	       "\\documentclass[margin, 10pt]{res}
+\\usepackage{helvet} % Default font is the helvetica postscript font
+\\setlength{\\textwidth}{5.1in} % Text width of the document"
+	       ("\\section{%s}" . "\\section*{%s}")
+               ("\\subsection{%s}" . "\\subsection*{%s}")
+               ("\\subsubsection{%s}" . "\\subsubsection*{%s}")
+               ("\\paragraph{%s}" . "\\paragraph*{%s}")))
+;; Test CV template
+(add-to-list 'org-latex-classes
+	     '("CVTest"
+	       "\\documentclass{resume} % Use the custom resume.cls style
+\\usepackage{carlito} % Default font is the helvetica postscript font
+\\renewcommand{\\familydefault}{\\sfdefault}
+\\usepackage[left=0.4 in,top=0.4in,right=0.4 in,bottom=0.4in]{geometry} % Document margins
+\\newcommand{\\tab}[1]{\\hspace{.2667\\textwidth}\\rlap{#1}} 
+\\newcommand{\\itab}[1]{\\hspace{0em}\\rlap{#1}}
+\\name{Konstantinos Papadimos} % Your name
+% You can merge both of these into a single line, if you do not have a website.
+\\address{+357-96504365, +30-6947651059}
+\\address{papadimos.konstantinos@ucy.ac.cy}
+\\begin{Document}
+"
+	       ("\\rSection{%s}" . "\\section*{%s}")
+               ("\\subsection{%s}" . "\\subsection*{%s}")
+               ("\\subsubsection{%s}" . "\\subsubsection*{%s}")
+               ("\\paragraph{%s}" . "\\paragraph*{%s}")))
+ ;; Article template
 (add-to-list 'org-latex-classes
              '("article"
-               "\\documentclass{article}"
-               ("\\section{%s}" . "\\section*{%s}")))
-
+               "\\documentclass[11pt,a4paper]{article}
+\\usepackage{subfiles}
+\\usepackage{algorithm}
+\\usepackage{minted}
+\\usepackage{xcolor}
+\\usepackage[utf8]{inputenc}
+\\usepackage{gentium}
+\\usepackage{graphicx}
+\\usepackage{grffile}
+\\usepackage{longtable}
+\\usepackage{wrapfig}
+\\usepackage{rotating}
+\\usepackage[normalem]{ulem}
+\\usepackage{amsmath}
+\\usepackage{textcomp}
+\\usepackage{amssymb}
+\\usepackage{capt-of}
+\\usepackage{hyperref}
+\\usepackage[greek]{babel}
+\\usepackage{multicol}
+\\usepackage[framemethod=tikz]{mdframed}
+\\usepackage[compact]{titlesec}
+\\usepackage{float}
+\\titlespacing{\section}{0pt}{*0}{*0}
+\\titlespacing{\subsection}{0pt}{*0}{*0}
+\\titlespacing{\subsubsection}{0pt}{*0}{*0}
+\\usepackage{geometry} % Required for adjusting page dimensions and margins
+\\geometry{
+	paper=a4paper, % Paper size, change to letterpaper for US letter size
+	top=2.5cm, % Top margin
+	bottom=3cm, % Bottom margin
+	left=2.5cm, % Left margin
+	right=2.5cm, % Right margin
+	headheight=14pt, % Header height
+	footskip=1.5cm, % Space from the bottom margin to the baseline of the footer
+	headsep=1.2cm, % Space from the top margin to the baseline of the header
+	%showframe, % Uncomment to show how the type block is set on the page
+}"
+               ("\\section{%s}" . "\\section*{%s}")
+               ("\\subsection{%s}" . "\\subsection*{%s}")
+               ("\\subsubsection{%s}" . "\\subsubsection*{%s}")
+               ("\\paragraph{%s}" . "\\paragraph*{%s}")))
 ;;Vterm configuration-----------------------------------------------
 (use-package vterm
   :commands vterm
@@ -453,6 +562,7 @@
   (setq mu4e-maildir "~/Mail")
   ;; Configure the function to use for sending mail
   (setq message-send-mail-function 'smtpmail-send-it)
+  (setq smtpmail-queue-mail nil)
   ;; Make sure plain text mails flow correctly for recipients
   (setq mu4e-compose-format-flowed t)
  ;; prevent <openwith> from interfering with mail attachments
@@ -477,7 +587,7 @@
                   (mu4e-refile-folder  . "/Gmail/[Gmail]/All Mail")
                   (mu4e-trash-folder  . "/Gmail/[Gmail]/Trash")))))
   
-  (setq org-capture-templates
+  (setq org-capture-mail-templates
 	`(("m" "Email Workflow")
 	  ("mf" "Follow Up" entry (file+headline "~/org/Mail.org" "Follow Up")
            "* TODO %a\n\n  %i")
@@ -519,7 +629,8 @@
 ;; Set up elfeed, an emacs rss feed vewer--------------------------------------------------------------------
 (use-package  elfeed)
 (setq elfeed-feeds
-      '(("https://bbs.archlinux.org/extern.php?action=feed&type=atom" blog arch)
+      '( ("https://archlinux.org/feeds/news/" ArchLinux news)
+	("https://physics.stackexchange.com/feeds" Physics StackExchange)
 	("feeds.feedburner.com/euronews/en/home/" europe news)
 	("https://www.espn.com/espn/rss/nba/news" nba news)
 	("https://feeds.feedburner.com/kathimerini/DJpy" greece news)
@@ -530,6 +641,9 @@
 	("https://www.youtube.com/c/JordanPetersonVideos" jp politics psychology)
 	("https://rss.app/feeds/f3hq9KWdnnhUx88o.xml" rl music composing)
 	("https://rss.app/feeds/u1j1RiyI51ZpTosP.xml" an music )
+	("http://feeds.aps.org/rss/prdsuggestions.xml" PRD suggestions)
+	("http://feeds.aps.org/rss/recent/prlsuggestions.xml" PRL suggestions)
+	("http://feeds.aps.org/rss/allsuggestions.xml" APS sugestions)
 	("https://politis.com.cy/feed/" cyprus news)))
 (global-set-key (kbd "C-x w") 'elfeed)
 ;; Customise dired ----------------------------------------------------------------------------------------------------
@@ -552,3 +666,38 @@
   :config
   (evil-collection-define-key 'normal 'dired-mode-map
     "H" 'dired-hide-dotfiles-mode))
+;;define a major mode for dict files------------------------------------------------------------------------------------
+;; create the list for font-lock.
+;; each category of keyword is given a particular face
+
+(setq mdict-font-lock-keywords
+      (let* (
+            ;; define several category of keywords
+            (x-keywords '("With" "keys" "items"))
+            (x-types '("float" "int"  "str" "bin" "Mixed"))
+
+            ;; generate regex string for each category of keywords
+            (x-keywords-regexp (regexp-opt x-keywords 'words))
+            (x-types-regexp (regexp-opt x-types 'symbols)))
+        `(
+	  ("#\\|" . font-lock-comment-face )
+	  ;;("!\\|" . font-lock-type-face)
+	  ("=\\|" . font-lock-constant-face)
+	  ("\\([[0-9a-zA-Z_]+\\)]" . font-lock-function-name-face)
+	  ("/!(\w)+/g" . font-lock-constant-face)
+	  ;;("\\([a-zA-Z_]+\\)=" . font-lock-constant-face)
+          (,x-types-regexp . 'font-lock-type-face)
+          (,x-keywords-regexp . 'font-lock-keyword-face)
+          ;; note: order above matters, because once colored, that part won't change.
+          ;; in general, put longer words first
+          )))
+
+;;;###autoload
+(define-derived-mode mdict-mode conf-mode "dict mode"
+  "Major mode for editing dict files"
+  ;; code for syntax highlighting
+  (setq font-lock-defaults '((mdict-font-lock-keywords))))
+;; add the mode to the `features' list
+(provide 'mdict-mode)
+;;; mylsl-mode.el ends here
+(add-to-list 'auto-mode-alist '("\\.dict\\'" . mdict-mode))

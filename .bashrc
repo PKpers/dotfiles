@@ -44,17 +44,24 @@ alias cnr='run'
 alias yt='ytfzf'
 #activate virtual envs with a smaller command
 alias ca='conda activate'
-#activate the webcam
+#activate the cam
 alias camera='mpv av://v4l2:/dev/video0 --profile=low-latency --untimed'
 #alias for nerofetch
 alias nf='neofetch'
 #gupload is way to big to write it every time
 alias gu='gupload'
 alias config='/usr/bin/git --git-dir=$HOME/.dotfiles --work-tree=$HOME'
-## Locale settings ##
-#export LC_ALL=el_GR.UTF-8
-
-## $PATH settings ##
+#pacman aliases
+alias install='sudo pacman -S'
+alias search='pacman -Ss'
+alias uninstall='sudo pacman -Rns'
+alias update='sudo pacman -Suy'
+alias yinstall='yay -S'
+alias ysearch='yay -Ss'
+#misc aliases
+alias timeshift='sudo timeshift-gtk'
+alias grep='grep --colour=auto'
+alias open='xdg-open'
 export PATH=/home/kpapad/.local/bin:$PATH
 ## Remove duplicates from history ##
 export HISTCONTROL=ignoredups
