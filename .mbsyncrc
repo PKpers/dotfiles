@@ -19,3 +19,26 @@ Slave :gmail-local:
 Patterns * ![Gmail]* "[Gmail]/Sent Mail" "[Gmail]/Starred" "[Gmail]/All Mail" "[Gmail]/Trash"
 Create Both
 SyncState *
+
+IMAPAccount work
+Host imap.gmail.com
+User papadimos.konstantinos00@gmail.com
+PassCmd "cat ~/.Wpswd"
+SSLType IMAPS
+CertificateFile /etc/ssl/certs/ca-certificates.crt
+
+IMAPStore work-remote
+Account work
+
+MaildirStore work-local
+Subfolders Verbatim
+Path ~/Mail/Work/
+Inbox ~/Mail/Work/Inbox
+
+Channel work
+Master :work-remote:
+Slave :work-local:
+Patterns * ![Gmail]* "[Gmail]/Sent Mail" "[Gmail]/Starred" "[Gmail]/All Mail" "[Gmail]/Trash"
+Create Both
+SyncState *
+

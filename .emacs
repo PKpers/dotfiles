@@ -39,6 +39,7 @@
 (dolist( mode '(org-mode-hook
 		term-mode-hook
 		vterm-mode-hook
+		dired-mode-hook
 		eshell-mode-hook
 		pdf-view-mode-hook
 		image-mode-hook))
@@ -57,6 +58,7 @@
 (global-set-key (kbd "C-<SPC> k") 'next-buffer)
 (global-set-key (kbd "C-<SPC> j") 'previous-buffer)
 (global-set-key (kbd "C-x e") 'eval-buffer)
+
 
 (use-package ivy
   :diminish
@@ -205,50 +207,39 @@
 (add-hook 'prog-mode-hook 'my-buffer-face-mode-dyslexic)
 
 ;; Configure spelling ----------------------------------------------------------------------------------------------------
-(require 'ispell)
-(setenv
- "DICPATH"
- "/usr/share/hunspell")
+;;(require 'ispell)
+;;(setenv
+;; "DICPATH"
+;; "/usr/share/hunspell")
 ;;
-(add-to-list 'ispell-local-dictionary-alist '("greek-hunspell"
-                                              "[[:alpha:]]"
-                                              "[^[:alpha:]]"
-                                              "[']"
-                                              t
-                                              ("-d" "el_GR"); Dictionary file name
-                                              nil
-                                              iso-8859-1))
 
-(add-to-list 'ispell-local-dictionary-alist '("english-hunspell"
-                                              "[[:alpha:]]"
-                                              "[^[:alpha:]]"
-                                              "[']"
-                                              t
-                                              ("-d" "en_US")
-                                              nil
-                                              iso-8859-1))
+;;(setq ispell-program-name "hunspell"          ; Use hunspell to correct mistakes
+;;      ispell-dictionary   "en_US") ; Default dictionary to use
 
-(setq ispell-program-name "hunspell"          ; Use hunspell to correct mistakes
-      ispell-dictionary   "en_US") ; Default dictionary to use
+;;(defun  fd-switch-dictionary()
+;;  "Switch greek and english dictionaries."
+;;  (interactive)
+;;  (let* ((dict ispell-current-dictionary)
+;;	 (new (if (string= dict "el_GR") "en_US"
+;;j		"el_GR")))
+ ;;   (ispell-change-dictionary new)
+ ;;   (message "Switched dictionary from %s to %s" dict new)))
 
-(defun  fd-switch-dictionary()
-  "Switch greek and english dictionaries."
-  (interactive)
-  (let* ((dict ispell-current-dictionary)
-	 (new (if (string= dict "el_GR") "en_US"
-		"el_GR")))
-    (ispell-change-dictionary new)
-    (message "Switched dictionary from %s to %s" dict new)))
-
-(global-set-key (kbd "<f8>") 'fd-switch-dictionary)
-(add-hook 'org-mode-hook 'turn-on-flyspell)
+;;(global-set-key (kbd "<f8>") 'fd-switch-dictionary)
+;;(add-hook 'org-mode-hook 'turn-on-flyspell)
+(use-package jinx  
+  :hook ((org-mode . jinx-mode)  
+)  
+  :bind ([remap ispell-word] . jinx-correct)  
+)
 ;; PDF files-------------------------------------------------------------
 ;; somehow pdf-tools is broken. Untill its fixed I will use mupdf as emacs default pdf reader with the use of open with package
 (use-package openwith)
 (require 'openwith)
 (setq openwith-associations '(("\\.pdf\\'" "mupdf" (file))
-			      ("\\.odp\\'" "libreoffice " (file))
-			      ("\\.png\\'" " feh "(file))
+			      ("\\.ods\\'" "libreoffice " (file))
+			      ("\\.odt\\'" "libreoffice " (file))
+			      ("\\.xlsx\\'" "libreoffice " (file))
 			      ))
 (openwith-mode t)
 
@@ -289,7 +280,7 @@
  '(doc-view-continuous t)
  '(ivy-rich-mode t)
  '(package-selected-packages
-   '(org-fragtog org-elp org-mime dired-hide-dotfiles dired-single openwith hydra evil-collection evil-mc-extras evil elfeed pdf-tools perspective pdf-view-restore flyspell-correct-ivy vterm eshell-prompt-extras eshell-git-prompt visual-fill-column org-bullets conda exec-path-from-shell helpful which-key use-package doom-themes doom-modeline counsel auto-correct))
+   '(company-math company auto-complete org-fragtog org-elp org-mime dired-hide-dotfiles dired-single openwith hydra evil-collection evil-mc-extras evil elfeed pdf-tools perspective pdf-view-restore flyspell-correct-ivy vterm eshell-prompt-extras eshell-git-prompt visual-fill-column org-bullets conda exec-path-from-shell helpful which-key use-package doom-themes doom-modeline counsel auto-correct))
  '(visual-line-mode t t))
 (custom-set-faces
  ;; custom-set-faces was added by Custom.
@@ -450,6 +441,18 @@
 ;; automatic latex preview
 (use-package org-fragtog)
 (add-hook 'org-mode-hook 'org-fragtog-mode)
+
+;; setup org publish for latex proects
+; add a latex class which translates headings to chapters 
+
+(setq org-publish-project-alist
+             '(("Bsc-Thesis"
+               :base-directory "/home/kpapad/UG_thesis/Thesis/Dissertation/src/"
+               :publishing-directory "/home/kpapad/UG_thesis/Thesis/Dissertation/out/" 
+               :publishing-function org-latex-publish-to-latex
+               :body-only t
+               :makeindex t
+               )))
 ;; ehsell prompt config -----------------------------------------------
 (defun efs/configure-eshell ()
   ;; Save command history when commands are entered
@@ -554,10 +557,22 @@
                ("\\subsection{%s}" . "\\subsection*{%s}")
                ("\\subsubsection{%s}" . "\\subsubsection*{%s}")
                ("\\paragraph{%s}" . "\\paragraph*{%s}")))
+
+(add-to-list 'org-latex-classes
+             '("book-noparts"
+               "\\documentclass{book}"
+               ("\\chapter{%s}" . "\\chapter*{%s}")
+               ("\\section{%s}" . "\\section*{%s}")
+               ("\\subsection{%s}" . "\\subsection*{%s}")
+               ("\\subsubsection{%s}" . "\\subsubsection*{%s}")
+               ("\\paragraph{%s}" . "\\paragraph*{%s}")
+               ("\\subparagraph{%s}" . "\\subparagraph*{%s}")))
+;
 ;;Vterm configuration-----------------------------------------------
 (use-package vterm
   :commands vterm
   :config
+  (define-key vterm-mode-map (kbd "C-<SPC>") 'ring-map) 
   (setq vterm-timer-delay 0)
 )
 ;; Managing mail with mu4e-----------------------------------------
@@ -592,13 +607,32 @@
               (string-prefix-p "/Gmail" (mu4e-message-field msg :maildir))))
           :vars '((user-mail-address . "dinogreco2000@gmail.com")
                   (user-full-name    . "Kostas Papadimos")
+		  (smtpmail-smtp-user . "dinogreco2000@gmail.com")
 		  (smtpmail-smtp-server  . "smtp.gmail.com")
                   (smtpmail-smtp-service . 465)
                   (smtpmail-stream-type  . ssl)
                   (mu4e-drafts-folder  . "/Gmail/[Gmail]/Drafts")
                   (mu4e-sent-folder  . "/Gmail/[Gmail]/Sent Mail")
                   (mu4e-refile-folder  . "/Gmail/[Gmail]/All Mail")
-                  (mu4e-trash-folder  . "/Gmail/[Gmail]/Trash")))))
+                  (mu4e-trash-folder  . "/Gmail/[Gmail]/Trash")))
+	 (make-mu4e-context
+          :name "Work"
+          :match-func
+          (lambda (msg)
+            (when msg
+              (string-prefix-p "/Work" (mu4e-message-field msg :maildir))))
+          :vars '((user-mail-address . "papadimos.konstantinos00@gmail.com")
+                  (user-full-name    . "Konstantinos Papadimos")
+		  (smtpmail-smtp-user . "papadimos.konstantinos00@gmail.com")
+		  (smtpmail-smtp-server  . "smtp.gmail.com")
+		  (mu4e-compose-signature . "Konstantinos Papadimos\nBSc. Physics, University of Cyprus\n+357 96 504 365")
+                  (smtpmail-smtp-service . 465)
+                  (smtpmail-stream-type  . ssl)
+                  (mu4e-drafts-folder  . "/Work/[Gmail]/Drafts")
+                  (mu4e-sent-folder  . "/Work/[Gmail]/Sent Mail")
+                  (mu4e-refile-folder  . "/Work/[Gmail]/All Mail")
+                  (mu4e-trash-folder  . "/Work/[Gmail]/Trash")))
+	 ))
   
   (setq org-capture-mail-templates
 	`(("m" "Email Workflow")
@@ -612,7 +646,13 @@
         ("/Gmail/[Gmail]/Sent Mail" . ?s)
         ("/Gmail/[Gmail]/Trash"     . ?t)
         ("/Gmail/[Gmail]/Drafts"    . ?d)
-        ("/Gmail/[Gmail]/All Mail"  . ?a)))
+        ("/Gmail/[Gmail]/All Mail"  . ?a)
+	("/Work/Inbox"             . ?I)
+        ("/Work/[Gmail]/Sent Mail" . ?S)
+        ("/Work/[Gmail]/Trash"     . ?T)
+        ("/Work/[Gmail]/Drafts"    . ?D)
+        ("/Work/[Gmail]/All Mail"  . ?A))
+      )
   ;; Run mu4e in the background to sync mail periodically
   (mu4e t))
 ;; use org mode with mail 
@@ -667,8 +707,8 @@
   :custom ((dired-listing-switches "-agho --group-directories-first"))
   :config
   (evil-collection-define-key 'normal 'dired-mode-map
-   "h" 'dired-up-directory
-   "l" 'dired-find-file))
+   "h" 'dired-single-up-directory
+   "l" 'dired-single-buffer))
 ;;(add-to-list 'load-path (expand-file-name "~/.emacs.d/dired-single/" user-emacs-directory))
 ;;(require 'dired-single)
 (use-package dired-single
