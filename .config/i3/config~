@@ -16,7 +16,7 @@ set $mod Mod1
 font pango:System San Francisco  11
 
 #detect sleep and lock screen after some time of inactivity 
-#exec_always xautolock -detectsleep -time 10 -locker "i3lock-fancy-rapid 5 3" -notify 30 -notifier "notify-send -u critical -t 10000 -- 'locking screen in 30 seconds'" -corners '----' &
+exec_always xautolock -detectsleep -time 10 -locker "i3lock-fancy-rapid 5 3" -notify 30 -notifier "notify-send -u critical -t 10000 -- 'locking screen in 30 seconds'" -corners '----' &
 
 # NetworkManager is the most popular way to manage wireless networks on Linux,
 # and nm-applet is a desktop environment-independent system tray GUI for it.
@@ -134,7 +134,7 @@ for_window [class= "Ristretto"] floating enable
 for_window [class= "Blueman-manager"] floating enable #border disable
 for_window [class= "Pavucontrol"] floating enable #border disable
 for_window [class= "Alacritty"] floating enable border pixel 1
-for_window [class= "qutebrowser"] border pixel 1
+for_window [class= "qutebrowser"] border pixel
 
 # reload the configuration file
 bindsym $mod+Shift+c reload
@@ -144,9 +144,9 @@ bindsym $mod+Shift+r restart
 bindsym $mod+Shift+e exec "i3-nagbar -t warning -m 'You pressed the exit shortcut. Do you really want to exit i3? This will end your X session.' -B 'Yes, exit i3' 'i3-msg exit'"
 #key bindings to start the most used applications
 bindsym $mod+Control+e exec emacsclient -c -a 'emacs'
-bindsym $mod+Control+t exec alacritty  
+bindsym $mod+Control+t exec  emacsclient -c -e "(progn (vterm) (rename-uniquely))"
+bindsym $mod+Control+f exec exec emacsclient -c '~/'
 bindsym $mod+Control+b exec qutebrowser
-bindsym $mod+Control+f exec pcmanfm
 
 # resize window (you can also use the mouse for that)
 mode "resize" {
